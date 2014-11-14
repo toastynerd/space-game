@@ -1,0 +1,21 @@
+{
+  "name": "space-game",
+  "version": "0.0.0",
+  "authors": [
+    "toastynerd <tylermorgan86@gmail.com>"
+  ],
+  "description": "a cooperative space rogue like",
+  "license": "GPL",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.3.2"
+  }
+}
