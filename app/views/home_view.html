@@ -1,7 +1,11 @@
 <div data-ng-controller="homeCtrl">
-  <h1>Welcome!</h1>
+  <h1>Welcome{{player.name ? ' ' + player.name : ''}}!</h1>
+  <input data-ng-model="playerInfo.name">
+  <button data-ng-click="changeName()">{{socket.name ? 'change name' : 'set name';}}</button>
+  <h2>Game List</h2>
+  <button data-ng-click="updateGameList()">Refresh</button>
   <ul data-ng-repeat="game in games">
-    <li>{{game}}</li>
+    <li>{{game}} <span data-ng-click="joinGame(game)">[join game]</span></li>
   </ul>
   <button data-ng-click="createNewGame()">Create New Game</button>
 </div>

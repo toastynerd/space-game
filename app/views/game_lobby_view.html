@@ -1,6 +1,12 @@
 <div data-ng-controller="gameLobbyCtrl">
   <h1>Game: {{gameId}}</h1>
   <ul data-ng-repeat="player in playerList">
-    <li>{{player}}</li>
+    <li>{{player.name || player.id}}</li>
   </ul>
+
+  <div data-ng-repeat="message in messages">
+    <p>{{message.name}}: {{message.body}}</p>
+  </div>
+  <input data-ng-model="message.body">
+  <button data-ng-click="sendMessage()">Send</button>
 </div>

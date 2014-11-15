@@ -10,12 +10,6 @@ var gameQueue = [];
 
 app.use(express.static(__dirname + '/build'));
 
-app.get('/api/games', function(req, res) {
-  var gameIds = Object.keys(games.active);
-  gameIds.splice(gameIds.indexOf('global'), 1);
-  res.json({ids: gameIds});
-});
-
 var server = http.createServer(app);
 var io = socket(server);
 
