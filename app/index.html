@@ -5,6 +5,13 @@
   <title></title>
 </head>
 <body>
+  <div data-ng-app="clientApp">
+    <ul data-ng-repeat="error in errors">
+      <li>{{error}}<span data-ng-click="removeError(error)">[x]</span></li>
+    </ul>
+    <div data-ng-view>
+    </div>
+  </div>
   <script src="client.js"></script>
 </body>
 </html>

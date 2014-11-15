@@ -1,21 +1,22 @@
+'use strict';
+var express = require('express');
 var http = require('http');
 var socket = require('socket.io');
-var fs = require('fs');
+var player = require('./lib/player');
+var uuid = require('node-uuid');
+var games = require('./lib/games');
+var app = express();
+var gameQueue = [];
 
-var handler = function(req, res) {
-  if (req.url === '/') req.url = '/index.html';
-  fs.readFile(__dirname + '/build' + req.url, function(err, data) {
-    if (err) {
-      console.log(err);
-      res.writeHead(500, {'Content-Type':'text/plain'});
-      return res.end();
-    }
-    res.writeHead(200, {'Content-Type':'text/html'});
-    res.end(data);
-  });
-};
+app.use(express.static(__dirname + '/build'));
 
-var server = http.createServer(handler);
+app.get('/api/games', function(req, res) {
+  var gameIds = Object.keys(games.active);
+  gameIds.splice(gameIds.indexOf('global'), 1);
+  res.json({ids: gameIds});
+});
+
+var server = http.createServer(app);
 var io = socket(server);
 
 server.listen(3000, function() {
@@ -23,5 +24,14 @@ server.listen(3000, function() {
 });
 
 io.on('connection', function(socket) {
-  socket.emit('msg', {'msg': 'hello world'});
+  socket.id = uuid.v4();
+  player(socket, games, gameQueue);
+  games.updateGameList(socket);
+  games.active.global.players.push(socket);
 });
+
+setInterval(function() {
+  while (gameQueue.length > 0) {
+    gameQueue.shift()();
+  }
+}, 1000);

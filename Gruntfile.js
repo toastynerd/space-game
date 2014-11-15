@@ -6,7 +6,7 @@ module.exports = function(grunt) {
 
   grunt.initConfig({
     jshint: {
-      src: ['server.js', 'app/js/**/*.js'],
+      src: ['server.js', 'app/js/**/*.js', 'lib/**/*.js'],
       options: {
         jshintrc: true
       }
@@ -31,9 +31,9 @@ module.exports = function(grunt) {
       },
 
       dev: {
+        cwd: 'app',
         expand: true,
-        flatten: true,
-        src: ['app/index.html'],
+        src: ['index.html', 'views/**/*.html'],
         dest: 'build/'
       }
     },
